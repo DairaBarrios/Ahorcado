@@ -1,32 +1,44 @@
 var palabra = ["a", "u", "s", "e", "n", "t", "e"]
 var cantidadDeLetras = palabra.length
-var nDeIntento = 0
+var vidas = 0
 var palabraAmostrar = ["_", "_", "_", "_", "_", "_","_"]
 var letrasUsadas = []
 
-// var letra = prompt(palabraAmostrar
-// + "\n Ingresa una letra")
+function jugar(){
+   
+    var letraElegida = document.getElementById("letra").value
+    intentar(letraElegida)
+}
 
-var resultado = obtenerResultado(palabra, palabraAmostrar, letra, nDeIntento, cantidadDeLetras, letrasUsadas)
 
-palabraAmostrar = resultado[0]
-nDeIntento = resultado[1]
-cantidadDeLetras = resultado[2]
-letrasUsadas = resultado[3]
-var esta = resultado[4]
+function intentar (letra) {
+    var posiciones = estaLaLetraEnLaPalabra(letra, palabra)
+    if (posiciones.length > 0 ) {
+        //completar palabra
+        var ganaste = true
 
-mostrarResultado(esta)
-/*
+    } else {
+        //resta una vida
+
+        vidas--
+        letrasUsadas.push(letra)
+
+        var ganaste = false
+    }
+
+    mostrarResultado(ganaste)
+}
+
 function mostrarResultado(resultado) {
     if (resultado) {
         alert("ganaste")
     } else {
         alert("perdiste")
     }
-}*/
+}
 
 
-// Lo que devuelve 
+// Devuelve un array con las posiciones de la letra en la palabra, si no se encuentra, devuelve un array vacio 
 function estaLaLetraEnLaPalabra(letra, palabra){
     var resultado = []
     var indiceABuscar = 0
@@ -47,3 +59,4 @@ function estaLaLetraEnLaPalabra(letra, palabra){
     }
     return resultado
 }
+
