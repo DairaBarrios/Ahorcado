@@ -1,6 +1,6 @@
 var palabra = ["a", "u", "s", "e", "n", "t", "e"]
 var cantidadDeLetras = palabra.length
-var vidas = 0
+var vidas = 9
 var palabraAmostrar = ["_", "_", "_", "_", "_", "_","_"]
 var letrasUsadas = []
 
@@ -14,27 +14,40 @@ function jugar(){
 function intentar (letra) {
     var posiciones = estaLaLetraEnLaPalabra(letra, palabra)
     if (posiciones.length > 0 ) {
-        //completar palabra
+        completarPalabra(letra, posiciones, palabraAmostrar)
         var ganaste = true
-
     } else {
-        //resta una vida
-
         vidas--
         letrasUsadas.push(letra)
-
+        restarVida()
         var ganaste = false
     }
-
+    if(vidas < 1){
+        alert("Perdiste")
+    }
+    if(palabraAmostrar.join("") == palabra.join("")){
+        alert("Ganaste")
+    }
     mostrarResultado(ganaste)
 }
 
 function mostrarResultado(resultado) {
     if (resultado) {
-        alert("ganaste")
     } else {
-        alert("perdiste")
     }
+}
+
+function restarVida() {
+    document.getElementById("vidas").innerHTML = "Te quedan: "+ vidas +" vidas"
+    
+}
+
+function completarPalabra(letra, posiciones, palabraAmostrar) {
+    for (var indice of posiciones) {
+        palabraAmostrar[indice] = letra
+    }
+    var palabraJunta = palabraAmostrar.join("")
+    document.getElementById("palabra").innerHTML = palabraJunta
 }
 
 
@@ -49,7 +62,6 @@ function estaLaLetraEnLaPalabra(letra, palabra){
         posicion = palabra.indexOf(letra, indiceABuscar)
 
         if (posicion != -1) {
-            
             resultado.push(posicion)
             indiceABuscar = posicion + 1
         } else {
