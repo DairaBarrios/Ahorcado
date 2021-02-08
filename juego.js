@@ -1,7 +1,7 @@
-var palabra = ["a", "u", "s", "e", "n", "t", "e"]
+var palabra = "ausente".toUpperCase().split("")  //TODO: agregar mas palabras. Elegir palabra de manera aleatoria 
 var cantidadDeLetras = palabra.length
 var vidas = 9
-var palabraAmostrar = ["_", "_", "_", "_", "_", "_","_"]
+var palabraAmostrar = ["_", "_", "_", "_", "_", "_","_"] //TODO:generar automaticamente 
 var letrasUsadas = []
 
 function jugar(){
@@ -56,7 +56,6 @@ function estaLaLetraEnLaPalabra(letra, palabra){
     var resultado = []
     var indiceABuscar = 0
     var posicion 
-
     while (indiceABuscar != -1) {
 
         posicion = palabra.indexOf(letra, indiceABuscar)
@@ -71,4 +70,20 @@ function estaLaLetraEnLaPalabra(letra, palabra){
     }
     return resultado
 }
+
+function generarBotones() {
+    var alf = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("")
+    var divBotones = document.getElementById("botones")
+    for (let letra of alf) {
+        var divboton = document.createElement("div")
+        divboton.innerHTML = crearBoton(letra)
+        divBotones.appendChild(divboton)
+        
+    }
+}
+
+function crearBoton(letra) {
+  return `<input class="center-align"type="button" onclick="intentar('`+ letra +`')" value= "`+ letra +`">`
+}
+
 
