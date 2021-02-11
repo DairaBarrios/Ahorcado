@@ -4,6 +4,21 @@ var vidas = 9
 var palabraAmostrar = ["_", "_", "_", "_", "_", "_","_"] //TODO:generar automaticamente 
 var letrasUsadas = []
 
+
+    var posibleJugador = localStorage.getItem("jugador")
+    if (posibleJugador == null) {
+        var nombre = prompt("Ingresa tu nombre");
+        var apellido = prompt("Ingresa tu apellido")
+        var jugador = {
+        "nombre": nombre, 
+        "apellido" : apellido
+        }
+        localStorage.setItem("jugador", JSON.stringify(jugador))
+    }else{
+        var jugador = posibleJugador;
+    }
+
+
 function jugar(){
    
     var letraElegida = document.getElementById("letra").value
@@ -23,10 +38,10 @@ function intentar (letra) {
         var ganaste = false
     }
     if(vidas < 1){
-        alert("Perdiste")
+        alert("Perdiste " + jugador.nombre)
     }
     if(palabraAmostrar.join("") == palabra.join("")){
-        alert("Ganaste")
+        alert("Ganaste " + jugador.nombre)
     }
     mostrarResultado(ganaste)
 }
