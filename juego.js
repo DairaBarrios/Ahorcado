@@ -27,6 +27,7 @@ function jugar(){
 
 
 function intentar (letra) {
+    $("#"+letra).prop('disabled', true)
     var posiciones = estaLaLetraEnLaPalabra(letra, palabra)
     if (posiciones.length > 0 ) {
         completarPalabra(letra, posiciones, palabraAmostrar)
@@ -89,16 +90,32 @@ function estaLaLetraEnLaPalabra(letra, palabra){
 function generarBotones() {
     var alf = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("")
     var divBotones = document.getElementById("botones")
+    // Se crean los divs de row que van a contener a los botones creados dinamicamente
+    var divBotonesFila1 = document.createElement("div")
+    divBotonesFila1.classList.add('row')
+    divBotonesFila1.classList.add('valign-wrapper')
+    divBotones.appendChild(divBotonesFila1)
+    var divBotonesFila2 = document.createElement("div")
+    divBotonesFila2.classList.add('row')
+    divBotonesFila2.classList.add('valign-wrapper')
+    divBotones.appendChild(divBotonesFila2)
     for (let letra of alf) {
         var divboton = document.createElement("div")
+        divboton.classList.add('boton')
         divboton.innerHTML = crearBoton(letra)
-        divBotones.appendChild(divboton)
+        "ABCDEFGHIJKLM".includes(letra) ? divBotonesFila1.appendChild(divboton) : divBotonesFila2.appendChild(divboton)
+        // divBotones.appendChild(divAAgregar)
         
     }
 }
-
+function resetear() {
+    var alf = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("")
+    for (let letra of alf) {
+        $("#"+letra).prop('disabled', false)
+    }
+}
 function crearBoton(letra) {
-  return `<input class="center-align"type="button" onclick="intentar('`+ letra +`')" value= "`+ letra +`">`
+  return `<input id="`+ letra +`" class="btn-floating btn-large waves-effect waves-light red" type="button" onclick="intentar('`+ letra +`')" value= "`+ letra +`">`
 }
 
 

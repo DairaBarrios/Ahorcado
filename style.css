@@ -3,3 +3,9 @@
 h2{
    justify-content: center;
 }
+
+.boton {
+   height: 100px;
+   width: 100px;
+   padding: 3px;
+}
