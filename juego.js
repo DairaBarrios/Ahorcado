@@ -1,55 +1,81 @@
-var palabra = "ausente".toUpperCase().split("")  //TODO: agregar mas palabras. Elegir palabra de manera aleatoria 
-var cantidadDeLetras = palabra.length
+var palabra  //TODO: agregar mas palabras. Elegir palabra de manera aleatoria 
 var vidas = 9
-var palabraAmostrar = ["_", "_", "_", "_", "_", "_","_"] //TODO:generar automaticamente 
+var palabraAmostrar //TODO:generar automaticamente 
+var palabras = ["Groot", "Thor", "Nebula", "Loki", "Vision"]
 var letrasUsadas = []
+var jugador 
 
 
-    var posibleJugador = localStorage.getItem("jugador")
+function inicializar() {
+        //getJugador()
+        abrirModal("#modal")
+        getPalabras()
+        generarPalabras()
+        generarBotones()
+
+}
+
+function guardarJugadores() {
+    var nombre = document.getElementById("nombre").value;
+    var apellido = document.getElementById("apellido").value;
+    jugador = {
+        "nombre": nombre, 
+        "apellido" : apellido
+    }
+    sessionStorage.setItem("jugador", JSON.stringify(jugador))
+}
+function getJugador() { 
+    var posibleJugador = sessionStorage.getItem("jugador")
     if (posibleJugador == null) {
         var nombre = prompt("Ingresa tu nombre");
         var apellido = prompt("Ingresa tu apellido")
-        var jugador = {
+        jugador = {
         "nombre": nombre, 
         "apellido" : apellido
         }
-        localStorage.setItem("jugador", JSON.stringify(jugador))
+        sessionStorage.setItem("jugador", JSON.stringify(jugador))
     }else{
-        var jugador = posibleJugador;
+         jugador = posibleJugador;
     }
 
+}
 
-function jugar(){
-   
+function jugar(){ 
     var letraElegida = document.getElementById("letra").value
     intentar(letraElegida)
 }
 
 
 function intentar (letra) {
+    var ganaste = false
+    var perdiste = false
     $("#"+letra).prop('disabled', true)
     var posiciones = estaLaLetraEnLaPalabra(letra, palabra)
     if (posiciones.length > 0 ) {
         completarPalabra(letra, posiciones, palabraAmostrar)
-        var ganaste = true
     } else {
         vidas--
         letrasUsadas.push(letra)
         restarVida()
-        var ganaste = false
+    }
+    if(vidas < 3){
+        M.toast({html:'¡Sr. Stark, no quiero morir!'})
     }
     if(vidas < 1){
-        alert("Perdiste " + jugador.nombre)
+        perdiste = true
     }
-    if(palabraAmostrar.join("") == palabra.join("")){
-        alert("Ganaste " + jugador.nombre)
+    if(palabraAmostrar.join("") == palabra){
+        ganaste = true
     }
-    mostrarResultado(ganaste)
+    mostrarResultado(ganaste, perdiste)
 }
 
-function mostrarResultado(resultado) {
-    if (resultado) {
-    } else {
+function mostrarResultado(ganaste, perdiste) {
+    if (ganaste) {
+        abrirModal("#modalVictoria")
+    } 
+    if (perdiste) {
+        abrirModal("#modalPerdiste")
     }
 }
 
@@ -86,8 +112,16 @@ function estaLaLetraEnLaPalabra(letra, palabra){
     }
     return resultado
 }
+function generarPalabras() {
+    var palabrasAUsar = palabras
+    palabra = palabrasAUsar[Math.floor(Math.random()* palabrasAUsar.length)].toUpperCase()
+    palabraAmostrar = ocultarPalabra(palabra).split("")
+    document.getElementById("palabra").innerHTML = palabraAmostrar.join("")
+}
 
 function generarBotones() {
+    
+
     var alf = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("")
     var divBotones = document.getElementById("botones")
     // Se crean los divs de row que van a contener a los botones creados dinamicamente
@@ -115,7 +149,58 @@ function resetear() {
     }
 }
 function crearBoton(letra) {
-  return `<input id="`+ letra +`" class="btn-floating btn-large waves-effect waves-light red" type="button" onclick="intentar('`+ letra +`')" value= "`+ letra +`">`
+  return `<input id="`+ letra +`" class="btn-floating btn-large waves-effect waves-light  yellow darken-3" type="button" onclick="intentar('`+ letra +`')" value= "`+ letra +`">`
 }
 
+function completarArray(value, len) {
+    var arr = [];
+    for (var i = 0; i < len; i++) {
+      arr.push(value);
+    }
+    return arr;
+  }
 
+  function ocultarPalabra(palabra) {
+      var palabras = palabra.split(" ")
+      var resultado = []
+      for (const p of palabras) {
+          resultado.push("_".repeat(p.length))
+      }
+      return resultado.join(" ")
+  }
+
+    function getPalabras() {
+        
+        $.ajax({
+            type:"GET",
+            dataType: "json",
+            url:"https://603ab935f1d6aa0017a10f5f.mockapi.io/Characters",
+            success:function(nombres)
+        {
+            for (const nombre of nombres) {
+                palabras.push(nombre.name)
+            }
+        }
+        });
+    }
+
+
+
+    //modal
+    
+     function abrirModal(id) {
+        $(document).ready(function(){
+            $(id).modal();
+            $(id).modal('open'); 
+         });
+    
+     }
+
+  //ahorcado animación
+ 
+
+//aviso de pocas vidas
+
+
+[]
+//M.toast({html:'¡Sr. Stark, no quiero morir!'})
