@@ -1,20 +1,6 @@
 body{
    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
-.prueba{
-   background-image: url(./img/7.jpg);
-   width: 42%;
-   height: 55%;
-   border-radius: 5%;
-}
-input{
-   color: blanchedalmond;
-}
-#palabra{
-   letter-spacing: 5px;
-   color: blanchedalmond;
-}
-
 h2{
    justify-content: center;
 }
@@ -23,10 +9,71 @@ p{
    letter-spacing: 3px;
 }
 
+#vidas {
+   margin-right: 10%;
+}
+
+/*Modals*/
+.usuario{
+   background-image: url(./img/7.jpg);
+   width: 42%;
+   height: 55%;
+   border-radius: 5%;
+}
+
+.victoria{
+   background-image: url(./img/ar.jpg);
+   width: 38%;
+   height: 58%;
+   border-radius: 5%;
+   padding-top: 15%;
+}
+
+.perdiste{
+   background-image: url(./img/lost1.jpg);
+   width: 30%;
+   height: 60%;
+   border-radius: 5%;
+   padding-top: 10%;
+}
+.valign-wrapper{
+  min-height: calc(20vh - 2px);
+   padding: 0;
+}
+.pad{
+   /*min-height: calc(65vh - 10px);*/
+   padding-top: 130px;
+   
+}
+.ganaste{
+   padding-top: 1px;
+}
+.box{
+   border-radius: 15%;
+   background-color: rgba(10, 10, 10, 0.164);
+}
+.name{
+   color: rgb(246, 248, 245);
+   text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+   font-weight: 800;
+}
+
+
+#palabra{
+   letter-spacing: 5px;
+   color: rgb(205, 255, 212);
+}
+
+
 .boton {
-   height: 100px;
-   width: 100px;
-   padding: 3px;
+   height: 50px;
+   width: 50px;
+   padding: 10%;
+   margin: 10%;
+}
+
+.valign-wrapper {
+   min-height: fit-content;
 }
 
 
@@ -62,3 +109,9 @@ p{
 .wromg-letters-container span{
    font-size: 25px;
 }
+
+canvas{
+   color: white;
+   border: white dashed 2px;
+   padding:15px;
+ }
